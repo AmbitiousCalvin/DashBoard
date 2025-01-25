@@ -2,8 +2,9 @@ import { useState, useEffect, useRef, memo } from "react";
 import "../styles/header.scss";
 import useDarkMode from "../hooks/useDarkMode";
 import useToggle from "../hooks/useToggle";
+import { useWindowSize } from "@uidotdev/usehooks";
 
-function Header({ toggleSidebar }) {
+function Header({ toggleSidebar, isSidebarOpen }) {
   const [darkMode, setDarkMode] = useDarkMode();
   const [isOpen, toggleSearchBar] = useToggle(false);
   const inputRef = useRef(null);
@@ -15,9 +16,16 @@ function Header({ toggleSidebar }) {
     }, 0);
   }
 
+  useEffect(() => {
+    console.log("header rendered");
+  }, []);
+
   return (
     <header>
-      <button className="icon-btn menu-icon" onClick={toggleSidebar}>
+      <button
+        className="icon-btn menu-icon"
+        onClick={() => toggleSidebar(!isSidebarOpen)}
+      >
         <i className="fa fa-bars"></i>
         {/* <i className="fa-solid fa-bars-staggered"></i> */}
       </button>
