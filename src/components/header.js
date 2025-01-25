@@ -3,7 +3,7 @@ import "../styles/header.scss";
 import useDarkMode from "../hooks/useDarkMode";
 import useToggle from "../hooks/useToggle";
 
-function Header() {
+function Header({ toggleSidebar }) {
   const [darkMode, setDarkMode] = useDarkMode();
   const [isOpen, toggleSearchBar] = useToggle(false);
   const inputRef = useRef(null);
@@ -17,7 +17,7 @@ function Header() {
 
   return (
     <header>
-      <button className="icon-btn menu-icon">
+      <button className="icon-btn menu-icon" onClick={toggleSidebar}>
         <i className="fa fa-bars"></i>
         {/* <i className="fa-solid fa-bars-staggered"></i> */}
       </button>

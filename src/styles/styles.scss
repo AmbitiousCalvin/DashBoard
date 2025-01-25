@@ -8,16 +8,16 @@
 }
 
 :root {
-  --gray-50: 24, 24, 27;
-  --gray-100: 60, 60, 60;
-  --gray-200: 90, 90, 90;
-  --gray-300: 120, 120, 120;
-  --gray-400: 150, 150, 150;
-  --gray-500: 180, 180, 180;
-  --gray-600: 200, 200, 200;
-  --gray-700: 220, 220, 220;
-  --gray-800: 240, 240, 240;
-  --gray-900: 250, 250, 250;
+  --gray-50: 20, 20, 23;
+  --gray-100: 50, 50, 50;
+  --gray-200: 80, 80, 80;
+  --gray-300: 110, 110, 110;
+  --gray-400: 140, 140, 140;
+  --gray-500: 165, 165, 165;
+  --gray-600: 185, 185, 185;
+  --gray-700: 205, 205, 205;
+  --gray-800: 225, 225, 225;
+  --gray-900: 255, 255, 255;
 }
 
 body.dark-mode {
@@ -43,6 +43,10 @@ body {
   font-size: 1.8rem;
 }
 
+a {
+  text-decoration: none;
+}
+
 // //=======================
 
 html {
@@ -51,18 +55,11 @@ html {
 
 // //=======================
 
-@mixin flex_center_row {
+@mixin flex_center($direction: row, $justify_content: center) {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: row;
-}
-
-@mixin flex_center_column {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: $justify_content;
+  flex-direction: $direction;
 }
 
 // ========================
@@ -76,7 +73,7 @@ html {
   border-radius: 0.25rem;
   background-color: $theme;
   color: #fff;
-  transition: background-color 0.25s, box-shadow 0.25s, color, 0.25s;
+  transition: background-color 0.15s, box-shadow 0.15s, color, 0.15s;
   cursor: pointer;
 
   &:hover {
@@ -106,14 +103,14 @@ html {
   background-color: transparent;
   color: rgb(var(--gray-50));
   cursor: pointer;
-  transition: background-color 0.25s, box-shadow 0.25s, color, 0.25s;
+  transition: background-color 0.15s, box-shadow 0.15s, color, 0.15s;
 
   &:hover {
-    background-color: rgba(var(--gray-600), 0.75);
+    background-color: rgba(var(--gray-800), 1);
   }
 
   &:active {
-    background-color: rgba(var(--gray-200), 0.45);
+    background-color: rgba(var(--gray-600), 1);
   }
 }
 
@@ -149,7 +146,7 @@ html {
 
 .icon-btn {
   @include icon_default;
-  @include flex_center_row;
+  @include flex_center;
 }
 
 .rounded-pill {
