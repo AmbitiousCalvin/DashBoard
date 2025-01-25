@@ -1,0 +1,161 @@
+@import "variables";
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+:root {
+  --gray-50: 24, 24, 27;
+  --gray-100: 60, 60, 60;
+  --gray-200: 90, 90, 90;
+  --gray-300: 120, 120, 120;
+  --gray-400: 150, 150, 150;
+  --gray-500: 180, 180, 180;
+  --gray-600: 200, 200, 200;
+  --gray-700: 220, 220, 220;
+  --gray-800: 240, 240, 240;
+  --gray-900: 250, 250, 250;
+}
+
+body.dark-mode {
+  --gray-50: 250, 250, 250;
+  --gray-100: 244, 244, 245;
+  --gray-200: 228, 228, 231;
+  --gray-300: 212, 212, 216;
+  --gray-400: 161, 161, 170;
+  --gray-500: 113, 113, 122;
+  --gray-600: 82, 82, 91;
+  --gray-700: 63, 63, 70;
+  --gray-800: 39, 39, 42;
+  --gray-900: 24, 24, 27;
+}
+
+// //=======================
+
+body {
+  height: 100%;
+  text-align: center;
+  background-color: rgb(var(--gray-900));
+  color: rgb(var(--gray-100));
+  font-size: 1.8rem;
+}
+
+// //=======================
+
+html {
+  font-size: 10px;
+}
+
+// //=======================
+
+@mixin flex_center_row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+@mixin flex_center_column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+// ========================
+
+@mixin btn_default($theme: $indigo-700) {
+  outline: none;
+  border: none;
+  width: max-content;
+  font-size: 1.8rem;
+  padding: 1rem 1.5rem;
+  border-radius: 0.25rem;
+  background-color: $theme;
+  color: #fff;
+  transition: background-color 0.25s, box-shadow 0.25s, color, 0.25s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($theme, 0.75);
+  }
+
+  &:active {
+    background-color: rgba($theme, 0.5);
+  }
+}
+
+@mixin btn_outline($theme: $indigo-600) {
+  color: rgb(var(--gray-50)) !important;
+  background-color: transparent;
+  border: 0.1rem solid $theme;
+}
+
+// ==========================
+
+@mixin icon_default() {
+  outline: none;
+  border: none;
+  font-size: 1.8rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 100%;
+  background-color: transparent;
+  color: rgb(var(--gray-50));
+  cursor: pointer;
+  transition: background-color 0.25s, box-shadow 0.25s, color, 0.25s;
+
+  &:hover {
+    background-color: rgba(var(--gray-600), 0.75);
+  }
+
+  &:active {
+    background-color: rgba(var(--gray-200), 0.45);
+  }
+}
+
+// ==========================
+
+::-webkit-scrollbar {
+  width: 0.8rem;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--gray-900));
+}
+
+::-webkit-scrollbar-thumb {
+  background: $indigo-500;
+  border-radius: 1.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $indigo-600;
+}
+
+// //======================
+
+.btn {
+  @include btn_default;
+}
+
+.btn-outline {
+  @include btn_default;
+  @include btn_outline;
+}
+
+.icon-btn {
+  @include icon_default;
+  @include flex_center_row;
+}
+
+.rounded-pill {
+  border-radius: 2.5rem;
+}
+
+.rounded-circle {
+  border-radius: 100%;
+}
