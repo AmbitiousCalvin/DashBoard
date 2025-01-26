@@ -13,6 +13,11 @@ header {
   padding: 0 1rem;
   background-color: rgb(var(--gray-900));
   z-index: 3000;
+
+  & .menu-icon svg{
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 header section {

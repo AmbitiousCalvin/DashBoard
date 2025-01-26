@@ -2,9 +2,16 @@ import { useState, useEffect, useRef, memo } from "react";
 import "../styles/header.scss";
 import useDarkMode from "../hooks/useDarkMode";
 import useToggle from "../hooks/useToggle";
-import { useWindowSize } from "@uidotdev/usehooks";
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuIcon from '@mui/icons-material/Menu';
 
-function Header({ toggleSidebar, isSidebarOpen }) {
+function Header({
+  isMiniMode,
+  toggleMiniMode,
+  isMobileMiniMode,
+  toggleMobileMiniMode,
+  isMobile,
+}) {
   const [darkMode, setDarkMode] = useDarkMode();
   const [isOpen, toggleSearchBar] = useToggle(false);
   const inputRef = useRef(null);
@@ -16,18 +23,20 @@ function Header({ toggleSidebar, isSidebarOpen }) {
     }, 0);
   }
 
-  useEffect(() => {
-    console.log("header rendered");
-  }, []);
+  console.log("header rendered");
 
   return (
     <header>
       <button
         className="icon-btn menu-icon"
-        onClick={() => toggleSidebar(!isSidebarOpen)}
+        onClick={isMobile ? toggleMobileMiniMode : toggleMiniMode}
       >
-        <i className="fa fa-bars"></i>
-        {/* <i className="fa-solid fa-bars-staggered"></i> */}
+        
+        {isMiniMode && !isMobile && <MenuIcon/>}
+        {isMobile && !isMobileMiniMode && <MenuIcon/>}
+        {!isMiniMode && !isMobile && <MenuOpenIcon/>}
+        {isMobileMiniMode && isMobile && <MenuOpenIcon/>}
+
       </button>
 
       <div className="logo-container">

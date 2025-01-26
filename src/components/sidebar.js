@@ -1,15 +1,13 @@
 import React from "react";
-import { useState, useEffect, memo, useRef } from "react";
+import { useState, useEffect, memo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useStorage";
 import "../styles/sidebar.scss";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import TaskIcon from "@mui/icons-material/Task";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { useWindowSize } from "@uidotdev/usehooks";
 
 const NAVIGATION = [
   {
@@ -75,19 +73,15 @@ const Section = ({ header, items, handleClick, activeIndex, sectionIndex }) => {
   );
 };
 
-const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
+const Sidebar = ({
+  isMiniMode,
+  toggleMiniMode,
+  isMobileMiniMode,
+  toggleMobileMiniMode,
+  isMobile,
+}) => {
   const [activeIndex, setActiveIndex] = useLocalStorage("path", "0-0");
-  const [prevState, setPrevState] = useState(isSidebarOpen);
   const navigate = useNavigate();
-  const size = useWindowSize();
-
-  useEffect(() => {
-    if (size.width <= 600) {
-      toggleSidebar(false);
-    } else {
-      toggleSidebar(prevState);
-    }
-  }, [size, prevState]);
 
   useEffect(() => {
     const [sectionIndex, itemIndex] = activeIndex.split("-");
@@ -95,13 +89,24 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   }, [activeIndex]);
 
   const handleClickInside = () => {
-    toggleSidebar(false);
-    console.log("clicked inside");
+    if (isMobile) {
+      toggleMobileMiniMode(false);
+    }
   };
+
+  useEffect(() => {
+    if (!isMobile) toggleMobileMiniMode(false);
+  }, [isMobile]);
+
+  console.log("sidebar rendered");
+
+  const classes = ["sidebar"];
+  if (isMiniMode) classes.push("mini");
+  if (isMobileMiniMode) classes.push("mini_mobile");
 
   return (
     <>
-      <div className={`sidebar ${isSidebarOpen ? "mini" : ""}`}>
+      <div className={classes.join(" ")}>
         {NAVIGATION.map((section, sectionIndex) => (
           <Section
             key={sectionIndex}
