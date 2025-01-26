@@ -7,14 +7,14 @@ header {
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom: 0.1rem solid rgb(var(--gray-800));
+  border-bottom: 0.1rem solid rgb(var(--gray-600));
   min-height: 7.3rem;
   gap: 1rem;
   padding: 0 1rem;
   background-color: rgb(var(--gray-900));
   z-index: 3000;
 
-  & .menu-icon svg{
+  & .menu-icon svg {
     width: 2.5rem;
     height: 2.5rem;
   }

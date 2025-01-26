@@ -112,6 +112,11 @@ html {
   &:active {
     background-color: rgba(var(--gray-600), 1);
   }
+
+  & svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 // ==========================
@@ -155,4 +160,60 @@ html {
 
 .rounded-circle {
   border-radius: 100%;
+}
+
+.layout {
+  display: flex;
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  position: relative;
+}
+
+.card {
+  width: clamp(30rem, 100%, 35rem);
+  border: 0.1rem solid rgb(var(--gray-600));
+  border-radius: 0.8rem;
+  margin: 1rem;
+  background-color: rgb(var(--gray-900));
+  box-shadow: 0 2px 4px 4px rgba(var(--gray-200), 0.15);
+  padding: 0.5rem;
+
+  &:focus-within,
+  &:focus {
+    border: 0.1rem solid rgb(var(--gray-200));
+  }
+
+  & input,
+  & textarea {
+    width: 100%;
+    margin: 1rem;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    background-color: transparent;
+    font-size: 1.8rem;
+    color: rgb(var(--gray-50));
+    resize: none !important;
+    overflow: hidden;
+  }
+
+  & input::placeholder,
+  & textarea::placeholder {
+    color: rgb(var(--gray-200));
+    font-weight: bold;
+  }
+
+  & textarea {
+    font-size: 1.4rem !important;
+  }
+  & textarea::placeholder {
+    font-size: 1.4rem;
+  }
+
+  .card-footer {
+    @include flex_center(row, flex-end);
+  }
 }
