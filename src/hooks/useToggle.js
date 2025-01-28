@@ -5,9 +5,7 @@ export default function useToggle(defaultValue) {
 
   const toggleValue = useCallback(
     (value) => {
-      setValue((currentValue) =>
-        typeof value === "boolean" ? value : !currentValue
-      );
+      setValue((currentValue) => (typeof value === "boolean" ? value : !currentValue));
     },
     [setValue]
   );

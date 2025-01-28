@@ -1,13 +1,14 @@
 import React from "react";
+import "../styles/sidebar.scss";
 import { useEffect, memo, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useStorage";
-import "../styles/sidebar.scss";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import TaskIcon from "@mui/icons-material/Task";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { useLayoutContext } from "../contexts/layoutContext";
 
 const NAVIGATION = [
   {
@@ -47,59 +48,54 @@ const NAVIGATION = [
   },
 ];
 
-const Section = memo(
-  ({ header, items, handleClick, activeIndex, sectionIndex }) => {
-    return (
-      <div className="sidebar-section">
-        <div className="section-header">{header}</div>
-        <ul className="section-items">
-          {items?.map((item, itemIndex) => {
-            const uniqueIndex = `${sectionIndex}-${itemIndex}`; // Generate unique index
-            return (
-              <Link
-                to={item.path}
-                key={uniqueIndex} // Use uniqueIndex here as key for better uniqueness
-                className={`section-item ${
-                  activeIndex === uniqueIndex ? "active" : ""
-                }`}
-                onClick={() => handleClick(uniqueIndex)} // Pass uniqueIndex to handleClick
-              >
-                <div className="section-item__icon">{item.icon}</div>
-                <div className="section-item__title">{item.title}</div>
-              </Link>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  }
-);
+// ===========================
 
-const Sidebar = ({
-  isMiniMode,
-  isMobileMiniMode,
-  toggleMobileMiniMode,
-  isMobile,
-}) => {
+const Section = memo(({ header, items, handleClick, activeIndex, sectionIndex }) => {
+  return (
+    <div className="sidebar-section">
+      <div className="section-header">{header}</div>
+      <ul className="section-items">
+        {items?.map((item, itemIndex) => {
+          const uniqueIndex = `${sectionIndex}-${itemIndex}`; // Generate unique index
+          return (
+            <Link
+              to={item.path}
+              key={uniqueIndex} // Use uniqueIndex here as key for better uniqueness
+              className={`section-item ${activeIndex === uniqueIndex ? "active" : ""}`}
+              onClick={() => handleClick(uniqueIndex)} // Pass uniqueIndex to handleClick
+            >
+              <div className="section-item__icon">{item.icon}</div>
+              <div className="section-item__title">{item.title}</div>
+            </Link>
+          );
+        })}
+      </ul>
+    </div>
+  );
+});
+
+const Sidebar = () => {
+  const { isMiniMode, isMobileMiniMode, toggleMobileMiniMode, isMobile } = useLayoutContext();
   const [activeIndex, setActiveIndex] = useLocalStorage("path", "0-0");
   const navigate = useNavigate();
+  console.log("sidebar rendered");
 
   useEffect(() => {
     const [sectionIndex, itemIndex] = activeIndex.split("-");
     navigate(NAVIGATION[sectionIndex]?.items[itemIndex]?.path || "/");
   }, [activeIndex, navigate]);
 
+  useEffect(() => {
+    if (!isMobile && isMobileMiniMode) {
+      toggleMobileMiniMode(false);
+    }
+  }, [isMobile, isMobileMiniMode]);
+
   const handleClickInside = useCallback(() => {
     if (isMobile) {
       toggleMobileMiniMode(false);
     }
   }, [isMobile, toggleMobileMiniMode]);
-
-  useEffect(() => {
-    if (!isMobile) toggleMobileMiniMode(false);
-  }, [isMobile]);
-
-  console.log("sidebar rendered");
 
   const classes = ["sidebar"];
   if (isMiniMode) classes.push("mini");
@@ -120,15 +116,10 @@ const Sidebar = ({
         ))}
 
         <div className="sidebar-footer">
-          <p>
-            &copy; {new Date().getFullYear()} CalvinTaw. All rights reserved.
-          </p>
+          <p>&copy; {new Date().getFullYear()} CalvinTaw. All rights reserved.</p>
         </div>
       </div>
-      <div
-        onClick={() => handleClickInside()}
-        className="sidebar-overlay"
-      ></div>
+      <div onClick={() => handleClickInside()} className="sidebar-overlay"></div>
     </>
   );
 };

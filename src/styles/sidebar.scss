@@ -10,24 +10,23 @@
   min-height: calc(100vh - 7.3rem);
   background-color: rgb(var(--gray-900));
   border-right: 0.1rem solid rgb(var(--gray-600));
-  padding: 0.75rem 1rem;
-  transition: width 0.5s, padding 0.5s;
+  padding: 0.75rem;
+  transition: width 0.5s, transform 0.45s;
 
   &.mini {
-    padding: 0 0.75rem;
+    transform: translateY(-2rem);
     width: 6rem;
   }
 
-  &.mini .sidebar-section {
-    padding: 0;
-  }
-
   &.mini .section-header {
-    margin: 0;
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translateY(2rem);
     pointer-events: none;
     visibility: hidden;
+  }
+
+  &.mini .sidebar-section:not(:first-child) .section-items {
+    transform: translateY(-1rem);
   }
 
   &.mini .sidebar-footer {
@@ -43,7 +42,6 @@
   border-top: 2px solid rgb(var(--gray-600));
   padding-top: 1rem;
   margin-top: 1rem;
-  transition: padding 0.5s;
 }
 
 .section-header {
@@ -53,7 +51,7 @@
   font-size: 1.3rem;
   font-weight: bold;
   text-align: left;
-  transition: opacity 0.5s, transform 0.5s, margin 0.5s, visibility 0.5s;
+  transition: opacity 0.4s, transform 0.4s, margin 0.4s, visibility 0.4s;
   z-index: -1;
 }
 
@@ -63,6 +61,7 @@
   margin: 0;
   z-index: 10;
   background-color: rgb(var(--gray-900));
+  transition: transform 0.4s;
 }
 
 .section-item {
@@ -122,11 +121,18 @@
 }
 
 .sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--gray-200), 0.2);
+  backdrop-filter: blur(1px);
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
   z-index: -1000;
-  transition: all 0.35s ease;
+  transition: opacity 0.5s;
 }
 
 @media screen and (max-width: 600px) {
@@ -134,22 +140,27 @@
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(var(--gray-200), 0.45);
-    backdrop-filter: blur(1px);
     z-index: 2800;
+  }
+
+  body:has(.sidebar.mini_mobile) {
+    overflow: clip;
+    padding-right: 0.8rem;
   }
 
   .sidebar {
     position: absolute;
     transform: translateX(-100%);
+    width: 6rem;
+    transition: none;
 
     &.mini {
       padding: 0.75rem 1rem;
+      transform: translateX(-100%);
+    }
+
+    &.mini .sidebar-section:not(:first-child) .section-items {
+      transform: translateY(0);
     }
 
     &.mini .sidebar-section:not(:first-child) {
@@ -163,8 +174,7 @@
     }
 
     &.mini_mobile {
-      transition: width 0.75s, padding 0.4s, transform 0.35s ease;
-      padding: 0.75rem 1rem;
+      transition: width 0.75s, transform 0.4s;
       width: 20rem;
       transform: translateX(0%);
     }

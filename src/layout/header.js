@@ -4,8 +4,36 @@ import useDarkMode from "../hooks/useDarkMode";
 import useToggle from "../hooks/useToggle";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useLayoutContext } from "../contexts/layoutContext";
 
-const HeaderSection = memo(function HeaderSection() {
+const MenuToggleButton = memo(function () {
+  const {
+    isMiniMode,
+    toggleMiniMode,
+    isMobileMiniMode,
+    toggleMobileMiniMode,
+    isMobile,
+  } = useLayoutContext();
+
+  const handleClick = () => {
+    if (isMobile) {
+      toggleMobileMiniMode();
+    } else {
+      toggleMiniMode();
+    }
+  };
+
+  return (
+    <button className="icon-btn menu-icon" onClick={handleClick}>
+      {isMiniMode && !isMobile && <MenuIcon />}
+      {isMobile && !isMobileMiniMode && <MenuIcon />}
+      {!isMiniMode && !isMobile && <MenuOpenIcon />}
+      {isMobileMiniMode && isMobile && <MenuOpenIcon />}
+    </button>
+  );
+});
+
+const HeaderSection = memo(function () {
   const [darkMode, setDarkMode] = useDarkMode();
   const [isOpen, toggleSearchBar] = useToggle(false);
   const inputRef = useRef(null);
@@ -70,27 +98,12 @@ const HeaderSection = memo(function HeaderSection() {
   );
 });
 
-function Header({
-  isMiniMode,
-  toggleMiniMode,
-  isMobileMiniMode,
-  toggleMobileMiniMode,
-  isMobile,
-}) {
+function Header() {
   console.log("header rendered");
 
   return (
     <header>
-      <button
-        className="icon-btn menu-icon"
-        onClick={isMobile ? toggleMobileMiniMode : toggleMiniMode}
-      >
-        {isMiniMode && !isMobile && <MenuIcon />}
-        {isMobile && !isMobileMiniMode && <MenuIcon />}
-        {!isMiniMode && !isMobile && <MenuOpenIcon />}
-        {isMobileMiniMode && isMobile && <MenuOpenIcon />}
-      </button>
-
+      <MenuToggleButton />
       <HeaderSection />
     </header>
   );
