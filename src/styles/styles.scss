@@ -1,0 +1,199 @@
+@import "variables";
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --gray-50: 0, 0, 0;
+  --gray-100: 50, 50, 50;
+  --gray-200: 70, 70, 70;
+  --gray-300: 100, 100, 100;
+  --gray-400: 130, 130, 130;
+  --gray-500: 155, 155, 155;
+  --gray-600: 175, 175, 175;
+  --gray-700: 195, 195, 195;
+  --gray-800: 215, 215, 215;
+  --gray-900: 250, 250, 250;
+}
+
+body.dark-mode {
+  --gray-50: 250, 250, 250;
+  --gray-100: 244, 244, 245;
+  --gray-200: 228, 228, 231;
+  --gray-300: 212, 212, 216;
+  --gray-400: 161, 161, 170;
+  --gray-500: 113, 113, 122;
+  --gray-600: 82, 82, 91;
+  --gray-700: 63, 63, 70;
+  --gray-800: 39, 39, 42;
+  --gray-900: 24, 24, 27;
+}
+
+// //=======================
+
+body {
+  height: 100%;
+  text-align: center;
+  background-color: rgb(var(--gray-900));
+  color: rgb(var(--gray-100));
+  font-size: 1.8rem;
+  overflow-x: clip;
+}
+
+a {
+  text-decoration: none;
+}
+
+// //=======================
+
+html {
+  font-size: 10px;
+}
+
+// //=======================
+
+@mixin flex_center($direction: row, $justify_content: center) {
+  display: flex;
+  align-items: center;
+  justify-content: $justify_content;
+  flex-direction: $direction;
+}
+
+// ========================
+
+@mixin btn_default($theme: $indigo-700) {
+  outline: none;
+  border: 0.1rem solid transparent;
+  width: max-content;
+  font-size: 1.8rem;
+  padding: 1rem 1.5rem;
+  border-radius: 0.25rem;
+  background-color: $theme;
+  color: #fff;
+  transition: background-color 0.15s, box-shadow 0.15s, color, 0.15s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($theme, 0.75);
+  }
+
+  &:active {
+    background-color: rgba($theme, 0.5);
+  }
+}
+
+@mixin btn_outline($theme: $indigo-600) {
+  color: rgb(var(--gray-50)) !important;
+  background-color: transparent;
+  border: 0.1rem solid $theme;
+}
+
+// ==========================
+
+@mixin icon_default() {
+  outline: none;
+  border: none;
+  font-size: 1.8rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 100%;
+  background-color: transparent;
+  color: rgb(var(--gray-50));
+  cursor: pointer;
+  transition: background-color 0.15s, box-shadow 0.15s, color, 0.15s;
+
+  &:hover {
+    background-color: rgba(var(--gray-800), 1);
+  }
+
+  &:active {
+    background-color: rgba(var(--gray-600), 1);
+  }
+
+  & svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+// ==========================
+
+::-webkit-scrollbar {
+  width: 0.8rem;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--gray-900));
+}
+
+::-webkit-scrollbar-thumb {
+  background: $indigo-500;
+  border-radius: 1.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $indigo-600;
+}
+
+// //======================
+
+.btn {
+  @include btn_default;
+}
+
+.btn-outline {
+  @include btn_default;
+  @include btn_outline;
+}
+
+.btn-green-outline {
+  @include btn_default($green-500);
+  @include btn_outline($green-500);
+}
+
+.btn-orange-outline {
+  @include btn_default($orange-600);
+  @include btn_outline($orange-600);
+}
+
+.icon-btn {
+  @include icon_default;
+  @include flex_center;
+}
+
+.rounded-pill {
+  border-radius: 2.5rem;
+}
+
+.rounded-circle {
+  border-radius: 100%;
+}
+
+.layout {
+  display: flex;
+  width: 100%;
+}
+
+.content-container {
+  width: 100%;
+  @include flex_center(column, flex-start);
+  align-items: flex-start;
+  gap: 3rem;
+  padding: 1rem 2rem;
+  transition: padding 0.25s, width 0.25s;
+}
+
+@media screen and (max-width: 400px) {
+  html {
+    font-size: 9px;
+  }
+
+  .content-container {
+    padding: 1rem;
+  }
+}
